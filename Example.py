@@ -13,7 +13,7 @@ import pandas as pd
 data = pd.read_csv("domain_properties.csv")
 
 
-
+'''
 def main_menu():
     while True:
         print("\n=== Data Viewer Interface ===")
@@ -42,7 +42,7 @@ def main_menu():
             break
         else:
             print("Invalid selection. Please choose a number between 1 and 6.")
-
+'''
 if __name__ == "__main__":
     main_menu()
 
