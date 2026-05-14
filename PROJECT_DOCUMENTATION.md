@@ -1,7 +1,7 @@
 # Assesment Task 1
 
 #### *Hypothesis:*
-- My Hypothesis is that the closer you are to the Sydney CBD the higher the price of houses are
+- My Hypothesis is that the suburb median income has a direct impact on the median house price
 
 #### *Requirements:*
 > - Data Loading - This project should have the ability to load files and handle errors such as missing files
