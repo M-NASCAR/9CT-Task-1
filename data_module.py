@@ -13,14 +13,14 @@ pd.set_option('display.float_format', '{:.2f}'.format)
 suburb_df = df.groupby('suburb')['price'].median().reset_index()
 suburb_df.columns = ['suburb', 'median_price']
 suburb_df['km_from_cbd'] = suburb_df['suburb'].map(df.groupby('suburb')['km_from_cbd'].first())
-
+    
 #suburb_df["km_from_cbd"] = df["km_from_cbd"]
 
 #print(suburb_df)
 #df["Mean_price"] = df["suburb"].map(suburb_df
 
-def clear_terminal():
-     os.system('cls')
+def clear_terminal(): #Clears the terminal and decides what operation to use based on the operating system
+      os.system('cls' if os.name == 'nt' else 'clear') 
 
 
 
@@ -61,7 +61,6 @@ def display_df_preview():
         elif choice == 3:
                 clear_terminal()
                 main_menu()
-                print(67)
                 break
         else:
                 print("Not a valid option please try again")
@@ -72,39 +71,6 @@ def display_df_preview():
 
 
 
-
-def main_menu():  #Function for the main menu
-    while True:
-        print("\n=== Data Viewer Interface ===")
-        print("1. Preview dataset")
-        print("2. View visualisation")
-        print("3. Search or filter data")
-        print("4. Update a data entry")
-        print("5. Save changes")
-        print("6. Exit")
-
-        main_choice = input("Select an option (1-6): ").strip()
-
-        if main_choice == '1':
-            clear_terminal()
-            display_df_preview()
-        elif main_choice == '2':
-            display_visualisation()
-        elif main_choice == '3':
-            search_data()
-        elif main_choice == '4':
-            update_data_entry()
-        elif main_choice == '5':
-            save_changes()
-            print("Changes saved.")
-        elif main_choice == '6':
-            print("Exiting program.")
-            break
-        else:
-            print("Invalid selection. Please choose a number between 1 and 6.")
-
-if __name__ == "__main__":
-    main_menu()
 
 
 
