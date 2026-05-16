@@ -4,69 +4,107 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 df = pd.read_csv("domain_properties.csv", on_bad_lines='skip')
-pd.set_option('display.float_format', '{:.2f}'.format)
+pd.set_option('display.float_format', '{:,.2f}'.format)
+pd.set_option('display.max_rows', None)
 
 
-
-#df['median_price'] = ['median_price']
-#print(df)
 suburb_df = df.groupby('suburb')['price'].median().reset_index()
 suburb_df.columns = ['suburb', 'median_price']
 suburb_df['km_from_cbd'] = suburb_df['suburb'].map(df.groupby('suburb')['km_from_cbd'].first())
     
-#suburb_df["km_from_cbd"] = df["km_from_cbd"]
-
-#print(suburb_df)
-#df["Mean_price"] = df["suburb"].map(suburb_df
-
-def clear_terminal(): #Clears the terminal and decides what operation to use based on the operating system
-      os.system('cls' if os.name == 'nt' else 'clear') 
 
 
-
-def preview_menu(): #Function for the Menu inside the data preview section
-    print("1. Preview Dataset")
-    print("2.Search for details on a specific suburb:")
-    print("3.Exit")
+def clear_terminal():
+    print("\033[H\033[J", end="")
+  
     
 
 
 def display_df_preview():
     while True:
-        preview_menu() #Function to Preview the Dataset
-        choice = int(input("Select an option (1-3): ").strip())
-        if choice == 1:
-            print(df)
-            preview_menu()
-            choice = int(input("Select an option (1-3): ").strip())
-           
+       
+          print("1. Preview Dataset")
+          print("2.Exit")
+          choice = int(input("Select an option (1-2): ").strip())
+          clear_terminal()
 
-        elif choice == 2:
-            userinput = input("Enter the suburb that you wish to know median house prices in: ").strip().title()
-            result = suburb_df[suburb_df['suburb'] == userinput][['suburb', 'median_price','km_from_cbd']].drop_duplicates(subset='suburb')
-            if result.empty:
-                print("Suburb Not found, Try again.")
-                print("2.Search for details on a specific suburb:")
-                print("3.Exit")
-                choice = int(input("Select an option (1-3): ").strip())
+          if choice == 1:
+            with pd.option_context('display.max_rows', 12,
+                       'display.max_columns', None,
+                       'display.precision', 3,
+                       ):
+                print(df.index==False)
+          
 
-            else:
-                print(result)
-                print("2.Search for details on a specific suburb:")
-                print("3.Exit")
-                choice = int(input("Select an option (2-3): ").strip())
-
-
-
-        elif choice == 3:
+          elif choice == 2:
                 clear_terminal()
-                main_menu()
                 break
-        else:
+          else:
                 print("Not a valid option please try again")
          
 
 
+def search_df():
+     
+     while True:
+        print("1. Search data for specific suburb details")
+        print("2.Filter Search")
+        print("3.Exit")
+        search_choice = int(input("Enter an option 1-3:"))
+
+       
+
+        if search_choice == 1:
+
+            userinput = input("Enter the suburb that you wish to know median house prices in: ").strip().title()
+            result = suburb_df[suburb_df['suburb'] == userinput][['suburb', 'median_price','km_from_cbd']].drop_duplicates(subset='suburb')
+
+            if result.empty:
+                print("Suburb Not found, Try again.")
+
+            else:
+                print(result)
+
+        elif search_choice == 2:
+            print("1. Filter by distance from CBD")
+            print("2. Filter by median house price")
+            print("3.Exit")
+            filter_choice = int(input("Select an option(1-3):"))
+
+            if filter_choice == 1:
+                 filter = int(input("Filter within X kilometres"))
+                 print(suburb_df[suburb_df['km_from_cbd'] <= filter])
+
+
+            elif filter_choice == 2:
+                filter = int(input("Filter results less than $X"))
+                result = print(suburb_df[suburb_df['median_price'] <= filter])
+                if result.empty:
+                    print("No Results found please try again.")
+                else:
+                    print(result)
+             
+                
+            elif filter_choice == 3:
+                break
+            else:
+                print("Not a valid Option please try again")
+              
+        elif search_choice == 3:
+            break
+
+
+
+         
+
+
+
+     
+
+
+
+     
+  
 
 
 
@@ -75,24 +113,5 @@ def display_df_preview():
 
 
 
-
-
-
-
-'''
-suburb_df.plot(
- kind="bar",
- x="suburb",
- y="mean_price",
-)
-'''
-
-
-
-
-
-
-
-#plt.show()
 
 

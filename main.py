@@ -3,16 +3,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from data_module import (
-                         preview_menu,
                          display_df_preview,
                          clear_terminal,
+                         search_df
 
                          )
 
 
 
 df = pd.read_csv("domain_properties.csv", on_bad_lines='skip')
-pd.set_option('display.float_format', '{:.2f}'.format)
+pd.set_option('display.float_format', '{:,.2f}'.format)
+pd.set_option('display.max_rows', None)
 
 
 
@@ -27,7 +28,7 @@ def main_menu():  #Function for the main menu
     while True:
         print("\n=== Data Viewer Interface ===")
         print("1. Preview dataset")
-        print("2. View visualisation")
+        print("2. View 1visualisation")
         print("3. Search or filter data")
         print("4. Update a data entry")
         print("5. Save changes")
@@ -41,7 +42,8 @@ def main_menu():  #Function for the main menu
         elif main_choice == '2':
             display_visualisation()
         elif main_choice == '3':
-            search_data()
+            clear_terminal()
+            search_df()
         elif main_choice == '4':
             update_data_entry()
         elif main_choice == '5':
