@@ -29,11 +29,7 @@ def display_df_preview():
           clear_terminal()
 
           if choice == 1:
-            with pd.option_context('display.max_rows', 12,
-                       'display.max_columns', None,
-                       'display.precision', 3,
-                       ):
-                print(df.index==False)
+              print(df.head(10).to_string(index=False))
           
 
           elif choice == 2:
@@ -43,9 +39,26 @@ def display_df_preview():
                 print("Not a valid option please try again")
          
 
+def display_visualisation():
+    
+    plt.scatter(suburb_df["km_from_cbd"], suburb_df["median_price"],alpha=0.5,color='red')
+    plt.xlabel("Distance from Sydney CBD (km)") 
+    plt.ylabel("Median house price ($)")
+    plt.title("Greater Sydney House Prices vs Distance from CBD")
+    plt.ticklabel_format(style='plain')
+        
+    plt.tight_layout()  
+    plt.show(block=False)
+    
+    input("Press Enter to return to the menu...")
+    plt.close()
+
+
+
+
 
 def search_df():
-     
+     clear_terminal()
      while True:
         print("1. Search data for specific suburb details")
         print("2.Filter Search")
@@ -61,11 +74,14 @@ def search_df():
 
             if result.empty:
                 print("Suburb Not found, Try again.")
+                clear_terminal()
 
             else:
+                clear_terminal()
                 print(result)
 
         elif search_choice == 2:
+            clear_terminal()
             print("1. Filter by distance from CBD")
             print("2. Filter by median house price")
             print("3.Exit")
@@ -77,21 +93,44 @@ def search_df():
 
 
             elif filter_choice == 2:
-                filter = int(input("Filter results less than $X"))
-                result = print(suburb_df[suburb_df['median_price'] <= filter])
-                if result.empty:
-                    print("No Results found please try again.")
+                clear_terminal()
+                print("1.Search for results over $X")
+                print("2.Search for results under $X")
+                print("3.Exit")
+                price_filter_choice = int(input("Select an option 1-3:"))
+
+
+                if price_filter_choice == 1:
+                    filter = int(input("Filter results over than $X, Enter X:"))
+                    result = suburb_df[suburb_df['median_price'] >= filter]
+                    if result.empty:
+                        print("No Results found please try again.")
+                    else:
+                        print(result.to_string(index=False))
+                elif price_filter_choice == 2:
+                    filter = int(input("Filter results less than $X, Enter X:"))
+                    result = suburb_df[suburb_df['median_price'] <= filter]
+                    if result.empty:
+                        print("No Results found please try again.")
+                    else:
+                        print(result.to_string(index=False))
+                elif filter_choice == 3:
+                    break
                 else:
-                    print(result)
-             
-                
+                    print("Not a valid option, please select an option 1-3")
+
+
             elif filter_choice == 3:
                 break
             else:
                 print("Not a valid Option please try again")
               
         elif search_choice == 3:
+            clear_terminal()
             break
+        else:
+            clear_terminal()
+            print("Not a valid option, please try again")
 
 
 
