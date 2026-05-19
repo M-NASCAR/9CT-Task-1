@@ -52,6 +52,9 @@ def display_visualisation():
     
     input("Press Enter to return to the menu...")
     plt.close()
+    clear_terminal()
+
+    
 
 
 
